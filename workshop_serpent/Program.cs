@@ -5,10 +5,10 @@
         static void Main(string[] args)
         {
             /*TO DO*/
-            /* Refaire le fonction display*/
+            /* Permettre aux joueurs de choisir le personnage caractère*/
 
-            //char player1 = '@';
-            //char player2 = '#';
+            char player1 = '@';
+            char player2 = '#';
             int positionEnd = 50;
 
             List<string> listOfPlayers = ListOfPlayers();
@@ -20,16 +20,16 @@
 
             while (play)
             {
+                Display(listOfPlayers, positionOfPlayers, player1, player2);
                 Move(listOfPlayers, positionOfPlayers);
                 for (int i = 0; i < positionOfPlayers.Length; i++)
                 {
                     Console.WriteLine("{0} a avancé(e) de {1} case(s)", listOfPlayers[i], positionOfPlayers[i]);
                 }
-                play = IsFinish(positionEnd, positionOfPlayers, listOfPlayers);
-                FallInTrap(positionOfPlayers, listOfPlayers);
-                Bonus(positionOfPlayers, listOfPlayers);
+                play = IsFinish(listOfPlayers,positionOfPlayers, positionEnd);
+                FallInTrap(listOfPlayers, positionOfPlayers);
+                Bonus(listOfPlayers, positionOfPlayers);
             }
-
         }
 
         public static List<string> ListOfPlayers()
@@ -77,14 +77,14 @@
             return moveOfPlayers;
         }
 
-        public static bool IsFinish(int positionEnd, int[] positionOfPlayers, List<string> listOfPlayers)
+        public static bool IsFinish(List<string> listOfPlayers, int[] positionOfPlayers, int positionEnd)
         {
             bool victoire =false;
-            for (int i = 0; i < listOfPlayers.Count; i++)
+            for (int player = 0; player < listOfPlayers.Count; player++)
             {
-                if (positionOfPlayers[i] == positionEnd)
+                if (positionOfPlayers[player] == positionEnd)
                 {
-                    Console.WriteLine("Victoire pour le joueur {0}", listOfPlayers[i]);
+                    Console.WriteLine("Victoire pour le joueur {0}", listOfPlayers[player]);
                     victoire = true;
                     break;
                     
@@ -95,27 +95,27 @@
             return true;
         }
 
-        public static int[] FallInTrap(int[] positionOfPlayers, List<string> listOfPlayers)
+        public static int[] FallInTrap(List<string> listOfPlayers, int[] positionOfPlayers)
         {
-            for (int i = 0; i < listOfPlayers.Count; i++)
+            for (int player = 0; player < listOfPlayers.Count; player++)
             {
-                switch (positionOfPlayers[i])
+                switch (positionOfPlayers[player])
                 {
                     case 37:
-                        Console.WriteLine("Dommage {0}, vous tombez dans un piège. Retour à la case 12", listOfPlayers[i]);
-                        positionOfPlayers[i] = 12;
+                        Console.WriteLine("Dommage {0}, vous tombez dans un piège. Retour à la case 12", listOfPlayers[player]);
+                        positionOfPlayers[player] = 12;
                         break;
                     case 14:
-                        Console.WriteLine("Dommage {0}, vous tombez dans un piège. Retour à la case 7", listOfPlayers[i]);
-                        positionOfPlayers[i] = 7;
+                        Console.WriteLine("Dommage {0}, vous tombez dans un piège. Retour à la case 7", listOfPlayers[player]);
+                        positionOfPlayers[player] = 7;
                         break;
                     case 46:
-                        Console.WriteLine("Dommage {0}, vous tombez dans un piège. Retour à la case 33", listOfPlayers[i]);
-                        positionOfPlayers[i] = 33;
+                        Console.WriteLine("Dommage {0}, vous tombez dans un piège. Retour à la case 33", listOfPlayers[player]);
+                        positionOfPlayers[player] = 33;
                         break;
                     case >50:
-                        Console.WriteLine("Dommage {0}, vous êtes allez trop loin! Vous retombez à la case 25", listOfPlayers[i]);
-                        positionOfPlayers[i] = 25;
+                        Console.WriteLine("Dommage {0}, vous êtes allez trop loin! Vous retombez à la case 25", listOfPlayers[player]);
+                        positionOfPlayers[player] = 25;
                         break;
                     default:
                         break;
@@ -123,23 +123,23 @@
             }
             return positionOfPlayers;
         }
-        public static int[] Bonus(int[] positionOfPlayers, List<string> listOfPlayers)
+        public static int[] Bonus(List<string> listOfPlayers, int[] positionOfPlayers)
         {
-            for (int i = 0; i < listOfPlayers.Count; i++)
+            for (int player = 0; player < listOfPlayers.Count; player++)
             {
-                switch (positionOfPlayers[i])
+                switch (positionOfPlayers[player])
                 {
                     case 20:
-                        Console.WriteLine("Bonus pour {0}! Vous allez directment à la case 35", listOfPlayers[i]);
-                        positionOfPlayers[i] = 35;
+                        Console.WriteLine("Bonus pour {0}! Vous allez directment à la case 35", listOfPlayers[player]);
+                        positionOfPlayers[player] = 35;
                         break;
                     case 2:
-                        Console.WriteLine("Bonus pour {0}! Vous allez directment à la case 17", listOfPlayers[i]);
-                        positionOfPlayers[i] = 17;
+                        Console.WriteLine("Bonus pour {0}! Vous allez directment à la case 17", listOfPlayers[player]);
+                        positionOfPlayers[player] = 17;
                         break;
                     case 31:
-                        Console.WriteLine("Bonus pour {0}! Vous allez directment à la case 43", listOfPlayers[i]);
-                        positionOfPlayers[i] = 43;
+                        Console.WriteLine("Bonus pour {0}! Vous allez directment à la case 43", listOfPlayers[player]);
+                        positionOfPlayers[player] = 43;
                         break;
                     default:
                         break;
@@ -148,40 +148,27 @@
             return positionOfPlayers;
         }
 
-        //public static void Display(int positionPlayer1, int positionPlayer2, char player1, char player2)
-        //{
-        //    char[] map = new char[50];
-        //    Console.Write("Carte joueur 1 ");
-        //    for (int j = 0; j < map.Length; j++)
-        //    {
+        public static void Display(List<string> listOfPlayers, int[] positionOfPlayers, char player1, char player2)
+        {
+            char[] map = new char[50];
 
-        //        Console.Write(' ');
-        //        if (positionPlayer1 == j)
-        //        {
-        //            Console.Write(player1);
-        //        }
-        //        else
-        //        {
-        //            Console.Write('-');
-        //        }
-        //        Console.Write(' ');
-        //    }
-        //    Console.WriteLine();
-        //    Console.Write("Carte joueur 2 ");
-        //    for (int j = 0; j < map.Length; j++)
-        //    {
-        //        Console.Write(' ');
-        //        if (positionPlayer2 == j)
-        //        {
-        //            Console.Write(player2);
-        //        }
-        //        else
-        //        {
-        //            Console.Write('-');
-        //        }
-        //        Console.Write(' ');
-        //    }
-        //    Console.WriteLine();
-        //}
+            for (int player = 0; player < listOfPlayers.Count; player++)
+            {
+                for (int place = 0; place < map.Length; place++)
+                {
+                    Console.Write(' ');
+                    if (positionOfPlayers[player] == place)
+                    {
+                        Console.Write(player1);
+                    }
+                    else
+                    {
+                        Console.Write('-');
+                    }
+                    Console.Write(' ');
+                }
+                Console.WriteLine();
+            }
+        }
     }
 }
