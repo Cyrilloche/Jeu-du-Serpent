@@ -5,14 +5,13 @@
         static void Main(string[] args)
         {
             /*TO DO*/
-            /* Permettre aux joueurs de choisir le personnage caractère*/
-
+            /* Pas le bon icon qui s'affiche dans le jeu*/
             char player1 = '@';
             char player2 = '#';
             int positionEnd = 50;
 
             List<string> listOfPlayers = ListOfPlayers();
-
+            List<char> choiceOfChars = CharsOfPlayers(listOfPlayers);
             int[] positionOfPlayers = new int[listOfPlayers.Count];
             bool play = true;
 
@@ -20,7 +19,7 @@
 
             while (play)
             {
-                Display(listOfPlayers, positionOfPlayers, player1, player2);
+                Display(listOfPlayers, positionOfPlayers, choiceOfChars);
                 Move(listOfPlayers, positionOfPlayers);
                 for (int i = 0; i < positionOfPlayers.Length; i++)
                 {
@@ -56,6 +55,51 @@
                 }
             }
             return listOfPlayers;
+        }
+        public static List<char> CharsOfPlayers(List<string> listOfPlayers)
+        {
+            char char1 = '■';
+            char char2 = '¶';
+            char char3 = '%';
+            char char4 = '#';
+
+            int numberOfChoice = 0;
+
+            List<char> choiceOfChars = [char1, char2, char3, char4];
+
+            List<char> charsOfPlayers = new List<char>();
+
+            Console.Write("Vous avez le choix entre 4 icônes pour jouer. Lequel voulez-vous ? 1, 2, 3, 4 ?\n");
+            while (numberOfChoice != listOfPlayers.Count)
+            {
+                foreach (var icon in choiceOfChars)
+                {
+                    Console.Write(" " + icon + " ");
+                }
+                Console.WriteLine();
+                Console.Write(" 1  2  3  4\nChoix :");
+                int choice = int.Parse(Console.ReadLine());
+                switch (choice)
+                {
+                    case 1:
+                        charsOfPlayers.Add(char1);
+                        break;
+                    case 2:
+                        charsOfPlayers.Add(char2);
+                        break;
+                    case 3:
+                        charsOfPlayers.Add(char3);
+                        break;
+                    case 4:
+                        charsOfPlayers.Add(char4);
+                        Console.WriteLine("test");
+                        break;
+                    default:
+                        break;
+                }
+                numberOfChoice++;
+            }
+            return choiceOfChars;
         }
         public static int LancerDeDes()
         {
@@ -148,7 +192,7 @@
             return positionOfPlayers;
         }
 
-        public static void Display(List<string> listOfPlayers, int[] positionOfPlayers, char player1, char player2)
+        public static void Display(List<string> listOfPlayers, int[] positionOfPlayers, List<char>choiceOfChars)
         {
             char[] map = new char[50];
 
@@ -159,7 +203,7 @@
                     Console.Write(' ');
                     if (positionOfPlayers[player] == place)
                     {
-                        Console.Write(player1);
+                        Console.Write(choiceOfChars[player]);
                     }
                     else
                     {
