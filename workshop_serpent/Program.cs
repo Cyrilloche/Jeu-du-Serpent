@@ -4,6 +4,10 @@
     {
         static void Main(string[] args)
         {
+            /* Créer une liste de joueur, avec un nom, et un carctère à définir
+             * dans la fonction Display, permettre d'afficher les plateaux des joueurs peu importe leur nombre
+             * modifier les autres fonctions pour qu'elle s'applique peu importe le nombre de joueur */
+
             int positionPlayer1 = 0;
             char player1 = '@';
             char player2 = '#';
@@ -17,6 +21,7 @@
 
             while (play)
             {
+                /* faire une méthode pour éviter la duplication de codes*/
                 Display(positionPlayer1, positionPlayer2, player1, player2);
                 resultDe = LancerDeDes();
                 Console.WriteLine("Le joueur 1 a obtenu un {0}", resultDe);
