@@ -5,16 +5,13 @@
         static void Main(string[] args)
         {
             /*TO DO*/
-            /* Créer une fonction qui ajoute dynamiquement un nombre de joueur en fonction du nombres de nom entrés */
             /* Refaire le fonction display*/
 
             //char player1 = '@';
             //char player2 = '#';
             int positionEnd = 50;
 
-            List<string> listOfPlayers = new List<string>();
-            listOfPlayers.Add("Leila");
-            listOfPlayers.Add("Cyril");
+            List<string> listOfPlayers = ListOfPlayers();
 
             int[] positionOfPlayers = new int[listOfPlayers.Count];
             bool play = true;
@@ -33,6 +30,32 @@
                 Bonus(positionOfPlayers, listOfPlayers);
             }
 
+        }
+
+        public static List<string> ListOfPlayers()
+        {
+            int numberMinimumOfPlayers = 1;
+            int numberMaximumOfPlayerts = 4;
+            bool exit = false;
+
+            List<string> listOfPlayers = new List<string>();
+            Console.WriteLine("Bienvenue dans le jeu du serpent !");
+
+            while (!exit)
+            {
+                Console.Write("Comment vous appelez vous :");
+                string nameOfPlayer = Console.ReadLine();
+                listOfPlayers.Add(nameOfPlayer);
+                Console.WriteLine("Bienvenue à toi {0}", nameOfPlayer);
+                Console.WriteLine("Y a-t-il d'autres joueurs ? y/n");
+                string answer = Console.ReadLine();
+                if (answer == "n")
+                {
+                    exit = true;
+                    return listOfPlayers;
+                }
+            }
+            return listOfPlayers;
         }
         public static int LancerDeDes()
         {
