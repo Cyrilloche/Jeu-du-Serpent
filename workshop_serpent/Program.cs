@@ -28,10 +28,7 @@
 
                 positionPlayer2 += resultDe;
 
-                /* Faire une seule méthode pour contrôler si c'est finis
-                 * faire un message qui renvoie le nom du joueur qui a finis
-                 * gérer le cas d'une égalité */
-                play = IsFinish(positionPlayer1, positionEnd) && IsFinish(positionPlayer2, positionEnd);
+                play = IsFinish(positionPlayer1, positionPlayer2, positionEnd);
 
                 positionPlayer1 = FallInTrap(positionPlayer1);
                 positionPlayer2 = FallInTrap(positionPlayer2);
@@ -40,29 +37,33 @@
                 positionPlayer2 = Bonus(positionPlayer2);
 
 
-                Console.WriteLine("Position du joueur 1: {0}",positionPlayer1);
+                Console.WriteLine("Position du joueur 1: {0}", positionPlayer1);
                 Console.WriteLine("Position du joueur 2: {0}", positionPlayer2);
             }
 
         }
-    public static int LancerDeDes()
-    {
-        Random rand = new Random();
-        int resultat = rand.Next(1, 7);
-        return resultat;
-    }
-    public static bool IsFinish(int currentPosition, int positionEnd)
-    {
-        if (currentPosition == positionEnd)
+        public static int LancerDeDes()
         {
-            Console.WriteLine("Victoire pour le joueur");
-            Console.WriteLine("Fin de partie");
-            return false;
+            Random rand = new Random();
+            int resultat = rand.Next(1, 7);
+            return resultat;
         }
-        return true;
-    }
+        public static bool IsFinish(int positionPlayer1, int positionPlayer2, int positionEnd)
+        {
+            if (positionPlayer1 == positionEnd)
+            {
+                Console.WriteLine("Victoire pour le joueur 1");
+                Console.WriteLine("Fin de partie");
+                return false;
+            } else if (positionPlayer2 == positionEnd)
+            {
+                Console.WriteLine("Victoire pour le joueur 2");
+                Console.WriteLine("Fin de partie");
+            }
+            return true;
+        }
 
-    public static int FallInTrap(int positionPlayer)
+        public static int FallInTrap(int positionPlayer)
         {
             if (positionPlayer == 37)
             {
@@ -87,9 +88,9 @@
             }
             return positionPlayer;
         }
-    public static int Bonus(int PositionPlayer)
+        public static int Bonus(int PositionPlayer)
         {
-            if(PositionPlayer == 20)
+            if (PositionPlayer == 20)
             {
                 Console.WriteLine("Bonus ! Vous allez directement case 35");
                 return 35;
@@ -113,7 +114,7 @@
             Console.Write("Carte joueur 1 ");
             for (int j = 0; j < map.Length; j++)
             {
-                
+
                 Console.Write(' ');
                 if (positionPlayer1 == j)
                 {
