@@ -4,10 +4,6 @@
     {
         static void Main(string[] args)
         {
-            /*TO DO*/
-            /* Pas le bon icon qui s'affiche dans le jeu*/
-            char player1 = '@';
-            char player2 = '#';
             int positionEnd = 50;
 
             List<string> listOfPlayers = ListOfPlayers();
@@ -20,21 +16,25 @@
             while (play)
             {
                 Display(listOfPlayers, positionOfPlayers, choiceOfChars);
-                Move(listOfPlayers, positionOfPlayers);
                 for (int i = 0; i < positionOfPlayers.Length; i++)
                 {
-                    Console.WriteLine("{0} a avancé(e) de {1} case(s)", listOfPlayers[i], positionOfPlayers[i]);
+                    Console.WriteLine("{0} débute le tour à la case {1}", listOfPlayers[i], positionOfPlayers[i]);
                 }
+                Move(listOfPlayers, positionOfPlayers);
                 play = IsFinish(listOfPlayers,positionOfPlayers, positionEnd);
                 FallInTrap(listOfPlayers, positionOfPlayers);
                 Bonus(listOfPlayers, positionOfPlayers);
+                for (int i = 0; i < positionOfPlayers.Length; i++)
+                {
+                    Console.WriteLine("{0} termine le cours à la case {1}", listOfPlayers[i], positionOfPlayers[i]);
+                }
             }
         }
 
         public static List<string> ListOfPlayers()
         {
-            int numberMinimumOfPlayers = 1;
-            int numberMaximumOfPlayerts = 4;
+            int numberMaximumOfPlayers = 4;
+            int numberOfPlayers = 0;
             bool exit = false;
 
             List<string> listOfPlayers = new List<string>();
@@ -42,10 +42,16 @@
 
             while (!exit)
             {
+                if(numberOfPlayers == numberMaximumOfPlayers)
+                {
+                    exit = true;
+                    break;
+                }
                 Console.Write("Comment vous appelez vous :");
                 string nameOfPlayer = Console.ReadLine();
                 listOfPlayers.Add(nameOfPlayer);
                 Console.WriteLine("Bienvenue à toi {0}", nameOfPlayer);
+                numberOfPlayers++;
                 Console.WriteLine("Y a-t-il d'autres joueurs ? y/n");
                 string answer = Console.ReadLine();
                 if (answer == "n")
@@ -66,12 +72,13 @@
             int numberOfChoice = 0;
 
             List<char> choiceOfChars = [char1, char2, char3, char4];
-
             List<char> charsOfPlayers = new List<char>();
 
             Console.Write("Vous avez le choix entre 4 icônes pour jouer. Lequel voulez-vous ? 1, 2, 3, 4 ?\n");
             while (numberOfChoice != listOfPlayers.Count)
             {
+
+                Console.WriteLine("{0} à toi de choisir ton icône !", listOfPlayers[numberOfChoice]);
                 foreach (var icon in choiceOfChars)
                 {
                     Console.Write(" " + icon + " ");
@@ -79,6 +86,7 @@
                 Console.WriteLine();
                 Console.Write(" 1  2  3  4\nChoix :");
                 int choice = int.Parse(Console.ReadLine());
+
                 switch (choice)
                 {
                     case 1:
@@ -92,7 +100,6 @@
                         break;
                     case 4:
                         charsOfPlayers.Add(char4);
-                        Console.WriteLine("test");
                         break;
                     default:
                         break;
@@ -128,7 +135,7 @@
             {
                 if (positionOfPlayers[player] == positionEnd)
                 {
-                    Console.WriteLine("Victoire pour le joueur {0}", listOfPlayers[player]);
+                    Console.WriteLine("Victoire pour {0}", listOfPlayers[player]);
                     victoire = true;
                     break;
                     
